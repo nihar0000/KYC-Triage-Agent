@@ -1,0 +1,44 @@
+# Pinned to exact versions that were installed and tested against while
+# building this project (see the companion explanation document for why
+# pinning matters here specifically: google-adk and mcp are both young,
+# fast-moving packages where an unpinned `pip install` could silently
+# resolve to a version with a changed API).
+
+streamlit==1.63.0
+
+# Agent orchestration. The [extensions] extra pulls in LiteLLM, which is
+# what lets us support Groq (and, in principle, 100+ other providers)
+# through the same LlmAgent(model=...) interface used for Gemini.
+google-adk[extensions]==2.9.0
+
+# Used directly by src/llm_factory.py for native Gemini support (ADK
+# depends on this internally too, pinning here just makes the dependency
+# explicit rather than implicit).
+google-genai==2.23.0
+
+# Groq's own SDK is NOT imported directly in this project (Groq access
+# goes through google-adk's LiteLLM integration instead) — LiteLLM itself
+# depends on it transitively. Listed here anyway so `pip list` makes the
+# dependency chain obvious to a reader of this file.
+groq==1.7.0
+
+# The Model Context Protocol SDK — powers src/mcp_tools_server.py (the
+# server) and is used internally by google-adk's McpToolset (the client).
+mcp==2.2.0
+
+# Synthetic data generation.
+Faker==40.38.0
+
+# Structured, PII-redacting logging (src/guardrails_and_logging.py).
+structlog==26.1.0
+
+# Loads config/rules.yaml (the compliance policy-as-code file).
+PyYAML==6.0.3
+
+# The risk-score gauge chart in the dashboard.
+plotly==7.0.0
+
+# Testing (tests/). Not strictly needed to RUN the app, but included so
+# `pip install -r requirements.txt` is enough to also run the test suite
+# — one less thing for a reviewer to figure out.
+pytest==9.1.1

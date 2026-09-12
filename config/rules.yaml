@@ -1,0 +1,51 @@
+# Compliance policy for the KYC Triage system.
+#
+# This is "policy as code": the actual approve / reject / manual-review
+# decision is made by src/agents.py's ComplianceRuleEngine reading THIS
+# file, not by asking an LLM to judge. An LLM is non-deterministic and
+# can't be held accountable the way a versioned, auditable config file
+# can — a real compliance/governance team should be able to read this
+# file and know exactly what the system will do, without knowing Python.
+#
+# Edit thresholds here and re-run the app — no code changes needed.
+
+version: 1
+
+# Checked FIRST, in order. Any hard stop that matches immediately decides
+# the case, regardless of the numeric risk score below.
+hard_stops:
+  - condition: watchlist_hit
+    decision: reject
+    reason: >-
+      Applicant matches an active sanctions/watchlist entry on file.
+      Per policy, watchlist matches are an automatic reject and cannot
+      be overridden by a low risk score.
+
+  - condition: document_quality_failed
+    decision: manual_review
+    reason: >-
+      Document extraction confidence was too low, or a required field
+      (e.g. expiration date) could not be reliably extracted. A human
+      reviewer must verify identity manually before any decision.
+
+# If no hard stop fired, the Fraud & Anomaly Detection Agent's numeric
+# risk_score (0-100) is bucketed here. Bands are checked in order; the
+# first band whose max_score is >= the case's risk_score applies.
+risk_score_bands:
+  - max_score: 30
+    decision: approve
+    reason: >-
+      Risk score is within the accepted threshold and no hard-stop
+      conditions were triggered.
+
+  - max_score: 70
+    decision: manual_review
+    reason: >-
+      Risk score falls in the manual-review band. A human compliance
+      officer must confirm before this case can be approved or rejected.
+
+  - max_score: 100
+    decision: reject
+    reason: >-
+      Risk score exceeds the maximum acceptable threshold for automatic
+      approval or manual review.
