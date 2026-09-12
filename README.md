@@ -10,6 +10,10 @@ with every step logged and traceable in real time.
 **Everything is synthetic.** No real customers, documents, or Document AI
 API calls are involved — see [Honesty about what's simulated](#honesty-about-whats-simulated) below.
 
+![Demo: selecting a scenario, the live agent orchestration log streaming in real time, and the resulting risk-score dashboard](docs/demo.gif)
+
+*Recorded directly from the running app — scenario selection → live multi-agent log → risk score gauge & decision dashboard. Running here in offline mock mode (no API key needed); with `GEMINI_API_KEY`/`GROQ_API_KEY` set, a real LLM powers the reasoning shown in the log.*
+
 ## Architecture
 
 ```
