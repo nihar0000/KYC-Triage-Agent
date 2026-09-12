@@ -1,14 +1,3 @@
----
-title: KYC Triage Multi-Agent System
-emoji: 🕵️
-colorFrom: blue
-colorTo: indigo
-sdk: streamlit
-sdk_version: "1.63.0"
-app_file: app/app.py
-pinned: false
----
-
 # KYC Triage Multi-Agent System
 
 A multi-agent **KYC (Know Your Customer) triage** system for financial
@@ -126,14 +115,28 @@ needed.
 ## Deploying to Hugging Face Spaces (zero-cost)
 
 1. Create a new Space at [huggingface.co/new-space](https://huggingface.co/new-space), choosing **Streamlit** as the SDK.
-2. Push this repository to the Space's git remote (Spaces are git repos):
+2. Hugging Face Spaces reads deployment config from a YAML block at the
+   very top of the Space's `README.md`. Add this block to the top of
+   **this file** before pushing to the Space (it's deliberately left out
+   of the GitHub copy, since GitHub renders it as ugly literal text
+   instead of parsing it):
+   ```yaml
+   ---
+   title: KYC Triage Multi-Agent System
+   emoji: 🕵️
+   colorFrom: blue
+   colorTo: indigo
+   sdk: streamlit
+   sdk_version: "1.63.0"
+   app_file: app/app.py
+   pinned: false
+   ---
+   ```
+3. Push this repository to the Space's git remote (Spaces are git repos):
    ```bash
    git remote add space https://huggingface.co/spaces/<your-username>/<space-name>
    git push space main
    ```
-3. The YAML block at the very top of this README is what tells the Space
-   which SDK to use and which file to run (`app_file: app/app.py`) — HF
-   Spaces reads it automatically, no extra config needed.
 4. (Optional) In the Space's **Settings → Variables and secrets**, add
    `GEMINI_API_KEY` or `GROQ_API_KEY` as a **Secret** (not a public
    Variable) to enable real LLM reasoning. Without one, the Space still
