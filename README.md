@@ -71,7 +71,7 @@ call inherently isn't.
 | Logging | structlog | Structured, redaction-aware, real observability |
 | Governance | Plain YAML + Python (`config/rules.yaml`) | Auditable policy-as-code instead of LLM judgment |
 
-A full beginner-friendly walkthrough of *why* each of these choices was
+A full walkthrough of *why* each of these choices was
 made, what alternatives were considered, and how the pieces fit together
 is in the companion document delivered alongside this project.
 
