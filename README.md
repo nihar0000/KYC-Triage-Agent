@@ -7,8 +7,8 @@ Verification — are coordinated by a routing orchestrator to reach an
 **Approve / Reject / Manual Review** decision on a simulated applicant,
 with every step logged and traceable in real time.
 
-**Everything is synthetic.** No real customers, documents, or Document AI
-API calls are involved — see [Honesty about what's simulated](#honesty-about-whats-simulated) below.
+
+API calls are involved — see [what's simulated](#whats-simulated) below.
 
 ![Demo: selecting a scenario, the live agent orchestration log streaming in real time, and the resulting risk-score dashboard](docs/demo.gif)
 
